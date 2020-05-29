@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R1免APP配网</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/CrazyBoyM/R1ConfigWifi/css/main.css">
+</head>
+<body>
+    <div class="container">
+        <h1>R1 配网控制台</h1>
+        <div class="set-wifi">
+            <div class="row">
+            <span>WIFI名称：</span><input id="ssid" placehoder="WIFI SSID（无线网名称）">
+            </div>
+            <div class="row">
+            <span>WIFI密码：</span><input id="passwd" placehoder="WIFI 密码">
+            </div>
+            <div class="row">
+            <span>加密方式：</span><input id="secure" placehoder="WIFI 加密方式">
+            </div>
+            <textarea class="res-info" id="wifilist">提示：首先请打开本网页后长按5s音箱上方按钮至白光闪烁，然后将本设备联接到音箱自带的WIFI热点上（一般为@PHICOMM_开头），最后在这里扫描并输入相关信息进行配网(注，加密方式一般填写WPA)</textarea>
+            <button onclick="loopx()">开始配网</button>
+            <!--<button onclick="scanWifi()">扫描热点</button>-->
+        </div>
+    </div>
+<footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CrazyBoyM/R1ConfigWifi/js/main.js"></script>
+    </footer>
+</body>
+</html>
+    
