@@ -4,11 +4,12 @@ color 07
 
 :Init
 	cls
-	echo 斐讯R1轻量工具箱
+	echo 斐讯R1极客工具箱
 	echo 借鉴了前辈们的研究并进行了整理优化，感谢大神们的贡献与研究精神
 	echo 本工具已开源, https://github.com/CrazyBoyM/R1DiyTools 欢迎一起完善
 	echo 请确保解压后运行，如提示adb命令不是内置命令请自行安装adb
 	echo IP3X官网：fx.ip3x.com (公益性质网站，主要收录R1绑定配网升级等DIY教程)
+	echo 官方Q群： 163063234
 	echo 当前路径：%~dp0
 	echo ################################################
 	echo 1.R1配网与绑定
@@ -114,6 +115,10 @@ color 07
     adb shell rm -rf /sdcard/otaprop.txt
     echo adb push ota\config\%~1.txt /sdcard/otaprop.txt
 	adb push ota\config\%~1.txt /sdcard/otaprop.txt
+	if "%~1" == "3119-3166" (
+	    adb push ota\localRom\update_normal.zip /sdcard/update_normal.zip
+	)
+	:: 该版本大于20M，单独从本地推送
     adb reboot
 	pause
 	goto Menu
