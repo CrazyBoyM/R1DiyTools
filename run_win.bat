@@ -23,6 +23,7 @@ color 07
 	exit
 
 :Menu
+    cls
 	echo ################################################
 	echo 请选择操作
 	echo 1.音箱固件更新
@@ -116,6 +117,7 @@ color 07
     echo adb push ota\config\%~1.txt /sdcard/otaprop.txt
 	adb push ota\config\%~1.txt /sdcard/otaprop.txt
 	if "%~1" == "3119-3166" (
+	    echo adb push ota\localRom\update_normal.zip /sdcard/update_normal.zip
 	    adb push ota\localRom\update_normal.zip /sdcard/update_normal.zip
 	)
 	:: 该版本大于20M，单独从本地推送
