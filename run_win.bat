@@ -12,7 +12,7 @@ color 07
 	echo 官方Q群： 163063234
 	echo 当前路径：%~dp0
 	echo ################################################
-	echo 1.R1配网与绑定
+	echo 1.给R1音箱配置网络
 	echo 2.开始adb连接R1
 	set X==
 	set /p X=请输入操作编号:
@@ -26,6 +26,7 @@ color 07
     cls
 	echo ################################################
 	echo 请选择操作
+	echo 0.R1音箱绑定
 	echo 1.音箱固件更新
 	echo 2.音箱安装DLNA服务端
 	echo 3.音箱安装氛围灯(仅适用于蓝牙播放)
@@ -35,6 +36,7 @@ color 07
 	set X==
 	set /p X=输入操作编号:
 	if "%X%" == "" goto Menu
+	if "%X%" == "0" goto DNSForR1
 	if "%X%" == "1" goto UpdateR1
 	if "%X%" == "2" goto DLANForR1
 	if "%X%" == "3" goto LightForR1
@@ -67,7 +69,6 @@ color 07
 	echo 开始为R1进行配置
 	echo 1.本地版（仅配网）
 	echo 2.在线版（含绑定教程）
-	echo 3.R1音箱一键绑定（解决提示“未绑定”）
 	set url=
 	set X==
 	set /p X=请输入操作编号：
@@ -78,7 +79,6 @@ color 07
     	echo 浏览器打开%url%中，请耐心等待
     	start "c:\progra~1\Intern~1\iexplore.exe" %url%
         )
-	if "%X%" == "3" goto DNSForR1
 	pause
 	goto Init
 	
