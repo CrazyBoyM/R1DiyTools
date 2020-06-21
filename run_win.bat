@@ -1,10 +1,10 @@
 @ECHO OFF
-TITLE R1DiyTools
+TITLE R1极客DIY工具箱
 color 07
 
 :Init
 	cls
-	echo 斐讯R1极客工具箱
+	echo 斐讯R1 - 极客DIY工具箱 v2.0
 	echo 借鉴了前辈们的研究并进行了整理优化，感谢大神们的贡献与研究精神
 	echo 本工具已开源, https://github.com/CrazyBoyM/R1DiyTools 欢迎一起完善
 	echo 请确保解压后运行，如提示adb命令不是内置命令请自行安装adb
@@ -13,14 +13,14 @@ color 07
 	echo 当前路径：%~dp0
 	echo ################################################
 	echo 1.R1配网与绑定
-	echo 2.开始连接R1
+	echo 2.开始adb连接R1
 	set X==
 	set /p X=请输入操作编号:
 	if "%X%" == "" goto Init
 	if "%X%" == "1" goto ConfigR1
 	if "%X%" == "2" goto ConnectR1
 	pause
-	exit
+	goto Init
 
 :Menu
     cls
@@ -67,23 +67,81 @@ color 07
 	echo 开始为R1进行配置
 	echo 1.本地版（仅配网）
 	echo 2.在线版（含绑定教程）
+	echo 3.R1音箱一键绑定（解决提示“未绑定”）
 	set url=
 	set X==
 	set /p X=请输入操作编号：
 	if "%X%" == "" goto ConfigR1
 	if "%X%" == "1" set url=%~dp0ext\web\wifi.html
-	if "%X%" == "2" set url="https://fx.ip3x.com"
-	echo 浏览器打开%url%中，请耐心等待
-	start "c:\progra~1\Intern~1\iexplore.exe" %url%
+	if "%X%" == "2" (
+    	set url="https://fx.ip3x.com"
+    	echo 浏览器打开%url%中，请耐心等待
+    	start "c:\progra~1\Intern~1\iexplore.exe" %url%
+        )
+	if "%X%" == "3" goto DNSForR1
 	pause
 	goto Init
 	
+:DNSForR1
+	cls
+	echo 本脚本委托叶神编写，公益服务器由IP3X.COM提供
+	echo 绑定后音箱将不会提示音箱未绑定，且可以恢复大多数功能的正常使用
+	echo 开始安装DNS工具......
+	adb shell settings put secure install_non_market_apps 1
+	adb push ext\app\DNS.apk /mnt/internal_sd/
+	adb shell pm install -r /mnt/internal_sd/DNS.apk
+	adb shell rm /mnt/internal_sd/DNS.apk
+    echo 开始自动配置DNS（预计1分钟）......
+    adb shell am start -n com.burakgon.dnschanger/com.burakgon.dnschanger.activities.MainActivity
+    adb shell sleep 10
+    
+    adb shell input tap 100 470
+    adb shell sleep 3
+    
+    adb shell input tap 100 120
+    adb shell sleep 3
+    
+    adb shell input tap 100 130
+    adb shell sleep 3
+    
+    adb shell input tap 150 180
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell input keyevent 67
+    adb shell sleep 3
+    
+    adb shell input text 47.240.76.176
+    adb shell input tap 150 280
+    adb shell sleep 3
+    
+    adb shell input tap 530 350
+    adb shell sleep 10
+    
+    adb shell ping aios-home.hivoice.cn
+    adb shell sleep 3
+    echo 清除DNS工具......
+	adb shell settings put secure install_non_market_apps 0
+	adb shell pm uninstall com.burakgon.dnschanger
+	echo 完成，喊“小讯小讯”，如未提示“未绑定”，即成功
+	pause
+	goto Menu
 
 :LightForR1
 	cls
 	echo 开始为R1安装氛围灯
 	adb shell settings put secure install_non_market_apps 1
-	adb install -r ext\app\EchoService.apk
+	adb push ext\app\EchoService.apk /mnt/internal_sd/
+	adb shell pm install -r /mnt/internal_sd/EchoService.apk
+	adb shell rm /mnt/internal_sd/EchoService.apk
 	adb shell settings put secure install_non_market_apps 0
 	echo 完成，喊“小讯小讯，氛围灯”以开启
 	pause
@@ -91,19 +149,29 @@ color 07
 
 :DLANForR1
 	cls
-	echo 开始为R1安装DLNA服务
+	echo 开始为R1安装DLNA服务......
 	adb shell settings put secure install_non_market_apps 1
-	adb install -r ext\app\dlna.apk
+	adb push ext\app\dlna.apk /mnt/internal_sd/
+	adb shell pm install -r /mnt/internal_sd/dlna.apk
+	adb shell rm /mnt/internal_sd/dlna.apk
 	adb shell settings put secure install_non_market_apps 0
+	echo 开始自动配置DLNA服务......
 	adb shell am start -n com.droidlogic.mediacenter/.MediaCenterActivity
+	adb shell sleep 10
 	adb shell input tap 100 150
+	adb shell sleep 1
 	adb shell input tap 100 150
+	adb shell sleep 1
 	adb shell input tap 500 100
+	adb shell sleep 1
 	adb shell input tap 500 150
+	adb shell sleep 1
 	adb shell input tap 100 200
+	adb shell sleep 1
 	adb shell input tap 500 100
+	adb shell sleep 1
 	adb shell input tap 500 150
-	echo 完成，享受吧
+	echo 完成，享受比蓝牙推送方式更先进的音质效果吧
 	pause
 	goto Menu
 	
@@ -127,6 +195,7 @@ color 07
 
 :UpdateR1
 	cls
+	echo   本工具内的R1音箱升级包托管在CDN上，全球公益加速哦
 	echo   请根据当前版本选择合适的升级操作（可以呼唤小讯查看软件版本号）
 	echo   1.从 3119 到 3166
 	echo   2.从 3166 到 3415
