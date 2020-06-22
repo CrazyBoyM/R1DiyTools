@@ -121,20 +121,28 @@ color 07
     adb shell sleep 3
     
     adb shell input text 47.240.76.176
+    adb shell sleep 3
+    
     adb shell input tap 150 280
     adb shell sleep 3
     
     adb shell input tap 530 350
-    adb shell sleep 10
+    adb shell sleep 15
     
     adb shell ping aios-home.hivoice.cn
+    adb shell ping www.baidu.com
     adb shell sleep 3
+    
+	echo 请多次喊“小讯小讯”，直到音箱不再提示“未绑定”
+    adb shell sleep 30
+	echo 若音箱不提示“未绑定”，就是成功了，否则请检查网络并重试绑定
+	pause
+	
     echo 清除DNS工具......
 	adb shell settings put secure install_non_market_apps 0
 	adb shell /system/bin/pm uninstall com.burakgon.dnschanger
 	adb shell sleep 10
-	echo 完成，喊“小讯小讯”，如未提示“未绑定”，即成功
-	pause
+	
 	goto Menu
 
 :LightForR1
