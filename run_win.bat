@@ -90,9 +90,13 @@ color 07
 	adb shell settings put secure install_non_market_apps 1
 	adb push ext\app\DNS.apk /mnt/internal_sd/
 	adb shell /system/bin/pm install -r /mnt/internal_sd/DNS.apk
+<<<<<<< HEAD
 	adb shell sleep 10
+=======
+>>>>>>> efa9c365fd084537a34125ab1d47b401e7615bd0
 	adb shell rm /mnt/internal_sd/DNS.apk
     echo 开始自动配置DNS（预计1分钟）......
+    adb shell sleep 10
     adb shell am start -n com.burakgon.dnschanger/com.burakgon.dnschanger.activities.MainActivity
     adb shell sleep 10
     
@@ -132,7 +136,10 @@ color 07
     echo 清除DNS工具......
 	adb shell settings put secure install_non_market_apps 0
 	adb shell /system/bin/pm uninstall com.burakgon.dnschanger
+<<<<<<< HEAD
 	adb shell sleep 10
+=======
+>>>>>>> efa9c365fd084537a34125ab1d47b401e7615bd0
 	echo 完成，喊“小讯小讯”，如未提示“未绑定”，即成功
 	pause
 	goto Menu
@@ -143,7 +150,10 @@ color 07
 	adb shell settings put secure install_non_market_apps 1
 	adb push ext\app\EchoService.apk /mnt/internal_sd/
 	adb shell /system/bin/pm install -r /mnt/internal_sd/EchoService.apk
+<<<<<<< HEAD
 	adb shell sleep 10
+=======
+>>>>>>> efa9c365fd084537a34125ab1d47b401e7615bd0
 	adb shell rm /mnt/internal_sd/EchoService.apk
 	adb shell settings put secure install_non_market_apps 0
 	echo 完成，喊“小讯小讯，氛围灯”以开启
@@ -156,10 +166,14 @@ color 07
 	adb shell settings put secure install_non_market_apps 1
 	adb push ext\app\dlna.apk /mnt/internal_sd/
 	adb shell /system/bin/pm install -r /mnt/internal_sd/dlna.apk
+<<<<<<< HEAD
 	adb shell sleep 10
+=======
+>>>>>>> efa9c365fd084537a34125ab1d47b401e7615bd0
 	adb shell rm /mnt/internal_sd/dlna.apk
 	adb shell settings put secure install_non_market_apps 0
 	echo 开始自动配置DLNA服务......
+	adb shell sleep 10
 	adb shell am start -n com.droidlogic.mediacenter/.MediaCenterActivity
 	adb shell sleep 10
 	adb shell input tap 100 150
