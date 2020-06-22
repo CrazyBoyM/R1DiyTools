@@ -1,4 +1,4 @@
 R1DiyTools-v*
-/firmware
-/ota/firmware/*
+# /firmware
+# /ota/firmware/*
 /ota/localRom/*
