@@ -4,13 +4,13 @@ color 07
 
 :Init
 	cls
-	echo 斐讯R1 - 极客DIY工具箱 v2.0
+	echo 斐讯R1 - 极客DIY工具箱 v2
 	echo 借鉴了前辈们的研究并进行了整理优化，感谢大神们的贡献与研究精神
 	echo 本工具已开源, https://github.com/CrazyBoyM/R1DiyTools 欢迎一起完善
-	echo 请确保解压后运行，如提示adb命令不是内置命令请自行安装adb
 	echo IP3X官网：fx.ip3x.com (公益性质网站，主要收录R1绑定配网升级等DIY教程)
 	echo 官方Q群： 163063234
 	echo 当前路径：%~dp0
+	echo 请确保解压后再运行(十分重要！！！)
 	echo ################################################
 	echo 1.给R1音箱配置网络
 	echo 2.开始adb连接R1
@@ -86,13 +86,14 @@ color 07
 	cls
 	echo 本脚本委托叶神编写，公益服务器由IP3X.COM提供
 	echo 绑定后音箱将不会提示音箱未绑定，且可以恢复大多数功能的正常使用
+	echo 有小概率失败，请重试几次或换用fx.ip3x.com上的其他几种方法
 	echo 开始安装DNS工具......
 	adb shell settings put secure install_non_market_apps 1
 	adb push ext\app\DNS.apk /mnt/internal_sd/
 	adb shell /system/bin/pm install -r /mnt/internal_sd/DNS.apk
 	adb shell sleep 10
 	adb shell rm /mnt/internal_sd/DNS.apk
-    echo 开始自动配置DNS（预计1分钟）......
+    echo 开始自动配置公益DNS服务（耐心等待）......
     adb shell am start -n com.burakgon.dnschanger/com.burakgon.dnschanger.activities.MainActivity
     adb shell sleep 10
     
@@ -129,19 +130,20 @@ color 07
     adb shell input tap 530 350
     adb shell sleep 15
     
-    adb shell ping aios-home.hivoice.cn
-    adb shell ping www.baidu.com
-    adb shell sleep 3
+    adb shell ping -c 1 aios-home.hivoice.cn
+    adb shell ping -c 1 www.baidu.com
     
-	echo 请多次喊“小讯小讯”，直到音箱不再提示“未绑定”
-    adb shell sleep 30
-	echo 若音箱不提示“未绑定”，就是成功了，否则请检查网络并重试绑定
+	echo 请多次喊“小讯小讯”，直到音箱不再提示“未绑定”（重要）
+	echo 等音箱不提示“未绑定后，请按回车键继续
 	pause
+    
+    adb shell ping -c 1 aios-home.hivoice.cn
+    adb shell ping -c 1 www.baidu.com
 	
-    echo 清除DNS工具......
+    echo 清除DNS中......
 	adb shell settings put secure install_non_market_apps 0
 	adb shell /system/bin/pm uninstall com.burakgon.dnschanger
-	adb shell sleep 10
+	adb shell sleep 6
 	
 	goto Menu
 
